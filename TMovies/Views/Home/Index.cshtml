@@ -12,7 +12,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="~/css/style.css" rel="stylesheet" />
     <style>
-        /* Custom CSS for movie cards */
         .movie-card {
             position: relative;
             width: 100%;
@@ -49,6 +48,7 @@
             height: 100%; /* Ensure the front side fills the entire container height */
         }
 
+
             .front img {
                 max-width: 100%;
                 max-height: 100%; /* Ensure image fills the entire front side */
@@ -66,9 +66,14 @@
             margin-bottom: 5px; /* Adjust spacing between metadata elements */
         }
 
+
+
+
         .card-meta > * {
             margin-right: 10px; /* Adjust spacing between metadata elements */
         }
+
+
 
         .back {
             transform: rotateY(180deg);
@@ -126,8 +131,6 @@
             height: 100%;
             padding-right: 10px; /* Adjust as needed for spacing */
         }
-
-
     </style>
 </head>
 <header class="header" data-header>
@@ -140,7 +143,15 @@
             <button class="search-btn">
                 <ion-icon name="search-outline"></ion-icon>
             </button>
-            <button class="btn btn-primary">Sign in</button>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <span class="logged-in-user" style="color: white; font-size: 1.2rem;">@User.Identity.Name</span>
+
+            }
+            else
+            {
+                <button class="btn btn-primary"> <a href="@Url.Action("Login", "Account")">Sign In</a></button>
+            }
 
         </div>
 
@@ -157,16 +168,16 @@
                 </li>
 
                 <li>
-                    <a href="@Url.Action("Movies", "Home")" class="navbar-link">Movies</a>
+                    <a href="@Url.Action("Movies", "Movie")" class="navbar-link">Movies</a>
                 </li>
 
                 <li>
-                    <a href="@Url.Action("TvShows", "Home")" class="navbar-link" >Tv Shows</a>
+                    <a href="@Url.Action("TvShows", "TvShow")" class="navbar-link">Tv Shows</a>
                 </li>
 
             </ul>
 
-            
+
         </nav>
 
     </div>
@@ -198,8 +209,8 @@
                 <div class="carousel-item @if (shuffledMovies.IndexOf(movie) == 0) {
             <text>active</text>
                 }">
-                    <img class="d-block w-100" src="@movie.ImgBanner" alt="@movie.Title" style="max-height: 700px; object-fit: cover;">
-                </div>
+                        <img class="d-block w-100" src="@movie.ImgBanner" alt="@movie.Title" style="max-height: 700px; object-fit: cover;">
+                    </div>
             }
 
             @foreach (var tvShow in shuffledTvShows)
@@ -219,10 +230,6 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
-
-
-
 
     <main>
         <article>
@@ -341,9 +348,9 @@
                                                     }
                                                 }
                                     </div>
-                        </ul>
-                    </div>
-                    </div>
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                         }
                 </ul>
@@ -351,7 +358,5 @@
             </section>
         </article>
     </main>
-
 </body>
 </html>
-

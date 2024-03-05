@@ -1,64 +1,72 @@
-﻿@model TMovies.Models.Movie
+﻿@model TMovies.Models.TvShow
 @using TMovies.Models.Enum
 @{
-    ViewBag.Title = "Update";
+    ViewBag.Title = "EditTvShow";
 }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<h2 class="text-center mb-4">Create New Movie</h2>
+<h2 class="text-center mb-4">Edit TvShow</h2>
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-body">
-                    <h4 class="card-title text-primary mb-4">Movie Details</h4>
+                    <h4 class="card-title text-primary mb-4">TvShow Details</h4>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    @using (Html.BeginForm("EditMovie", "Home", FormMethod.Post, new { id = "create-form", @class = "needs-validation", novalidate = "novalidate" }))
+                    @using (Html.BeginForm("EditTvShow", "TvShow", FormMethod.Post, new { id = "edit-form", @class = "needs-validation", novalidate = "novalidate" }))
                     {
                         @Html.AntiForgeryToken()
 
+                        @Html.HiddenFor(model => model.Id)
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie title" } })
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter TV show title" } })
                             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie rating" } })
+                            @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter TV show rating" } })
                             @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie runtime" } })
+                            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter TV show runtime" } })
                             @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
-                            @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "text-muted mb-1" })
+                            @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Plot, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.TextAreaFor(model => model.Plot, new { @class = "form-control", rows = "4", placeholder = "Enter movie plot" })
+                            @Html.TextAreaFor(model => model.Plot, new { @class = "form-control", rows = "4", placeholder = "Enter TV show plot" })
                             @Html.ValidationMessageFor(model => model.Plot, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Director, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie director" } })
+                            @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter TV show director" } })
                             @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
                         </div>
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.ImgLink, htmlAttributes: new { @class = "text-muted mb-1" })
                             @Html.EditorFor(model => model.ImgLink, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter link for the poster" } })
                             @Html.ValidationMessageFor(model => model.ImgLink, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ImgBanner, htmlAttributes: new { @class = "text-muted mb-1" })
+                            @Html.EditorFor(model => model.ImgBanner, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter link for the banner" } })
+                            @Html.ValidationMessageFor(model => model.ImgBanner, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.IMDbLink, htmlAttributes: new { @class = "text-muted mb-1" })
@@ -66,18 +74,28 @@
                             @Html.ValidationMessageFor(model => model.IMDbLink, "", new { @class = "text-danger" })
                         </div>
 
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Seasons, htmlAttributes: new { @class = "text-muted mb-1" })
+                            @Html.EditorFor(model => model.Seasons, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter number of seasons" } })
+                            @Html.ValidationMessageFor(model => model.Seasons, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Episodes, htmlAttributes: new { @class = "text-muted mb-1" })
+                            @Html.EditorFor(model => model.Episodes, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter number of episodes" } })
+                            @Html.ValidationMessageFor(model => model.Episodes, "", new { @class = "text-danger" })
+                        </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "text-muted mb-1" })
-                            <select id="genre-dropdown" class="form-control">
+                            <select id="genre-dropdown" class="form-control" name="Genre">
                                 <option value="">Select Genre</option>
                                 @foreach (Genre genre in Enum.GetValues(typeof(Genre)))
                                 {
-                                    <option value="@genre">@genre</option>
+                                    <option value="@genre" @(Model.Genre == genre ? "selected" : "")>@genre</option>
                                 }
                             </select>
                             @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => model.Genre) <!-- Hidden input for Genre -->
                         </div>
 
                         <div class="form-group">
@@ -95,10 +113,9 @@
                             @Html.ValidationMessageFor(model => model.Actors, "", new { @class = "text-danger" })
                         </div>
 
-
                         <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary">Edit</button>
-                            <a href="@Url.Action("Movies")" class="btn btn-secondary ml-3">Back to List</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a href="@Url.Action("TvShows")" class="btn btn-secondary ml-3">Cancel</a>
                         </div>
                     }
                 </div>
@@ -112,5 +129,4 @@
         var selectedGenre = this.value;
         document.getElementById('Genre').value = selectedGenre;
     });
-
 </script>

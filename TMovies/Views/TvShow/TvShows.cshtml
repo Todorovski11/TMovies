@@ -134,7 +134,7 @@
 </head>
 <body>
     <div class="mb-3">
-        <a href="@Url.Action("CreateTvShow", "Home")" class="btn btn-primary">Create New Tv Show</a>
+        <a href="@Url.Action("CreateTvShow", "TvShow")" class="btn btn-primary">Create New Tv Show</a>
     </div>
     <main>
         <article>
@@ -191,8 +191,10 @@
                                                 }
                                     </div>
                         </ul>
-                        <a href="@Url.Action("EditTvShow", "Home", new { id = @movie.Id })" class="btn btn-primary"><i class="fa-solid fa-gear" style="color: #FFD43B;"></i></a>
-                        <button type="button" class="btn btn-danger" onclick="showDeleteModal('@movie.Id')"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("EditMovie", "Movie", new { id = @movie.Id })" class="btn btn-primary"><i class="fa-solid fa-gear" style="color: #FFD43B;"></i>Edit</a>
+                            <button type="button" class="btn btn-primary" style="color: red;" onclick="showDeleteModal('@movie.Id')"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                        </div>
                     </div>
                     </div>
                     </li>
@@ -237,7 +239,7 @@
             var movieId = $('#deleteMovieId').val();
             // Perform AJAX request to delete the movie with movieId
             $.ajax({
-                url: '/home/DeleteTvShow/' + movieId,
+                url: '/TvShow/DeleteTvShow/' + movieId,
                 method: 'DELETE',
                 success: function (response) {
                     if (response.success) {

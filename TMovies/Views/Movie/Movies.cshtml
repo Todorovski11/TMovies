@@ -136,7 +136,10 @@
 </head>
 <body>
     <div class="mb-3">
-        <a href="@Url.Action("CreateMovie", "Home")" class="btn btn-primary">Create New Movie</a>
+        <a href="@Url.Action("CreateMovie", "Movie")" class="btn btn-primary" @if (!User.Identity.IsAuthenticated)
+        {
+            <text>onclick="showLoginPopup()"</text>
+        }>Create New Movie</a>
     </div>
     <main>
         <article>
@@ -196,9 +199,11 @@
                                                 }
                                     </div>
                         </ul>
-                        <!-- Delete button -->
-                        <a href="@Url.Action("EditMovie", "Home", new { id = @movie.Id })" class="btn btn-primary"><i class="fa-solid fa-gear" style="color: #FFD43B;"></i></a>
-                        <button type="button" class="btn btn-danger" onclick="showDeleteModal('@movie.Id')">Delete</button>
+                        <!-- Delete and Edit buttons -->
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("EditMovie", "Movie", new { id = @movie.Id })" class="btn btn-primary"><i class="fa-solid fa-gear" style="color: #FFD43B;"></i>Edit</a>
+                            <button type="button" class="btn btn-primary" style="color: red;" onclick="showDeleteModal('@movie.Id')"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                        </div>
                     </div>
                     </div>
                     </li>
@@ -208,6 +213,7 @@
             </section>
         </article>
     </main>
+
 
     <!-- Modal for delete confirmation -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -237,10 +243,19 @@
 
     <!-- JavaScript for delete confirmation -->
     <script>
-        // Function to show the delete modal and set movie id
+        function handleCreateClick(event) {
+            if (!@User.Identity.IsAuthenticated) {
+                event.preventDefault(); // Prevent the default action (i.e., redirect)
+                showLoginPopup(); // Show the pop-up message
+            }
+        }
         function showDeleteModal(movieId) {
             $('#deleteMovieId').val(movieId);
             $('#deleteModal').modal('show');
+        }
+        // Function to show pop-up message
+        function showLoginPopup() {
+            alert("You need to log in to access this feature.");
         }
 
         // Function to handle movie deletion
@@ -248,7 +263,7 @@
             var movieId = $('#deleteMovieId').val();
             // Perform AJAX request to delete the movie with movieId
             $.ajax({
-                url: '/home/DeleteMovie/' + movieId,
+                url: '/Movie/DeleteMovie/' + movieId,
                 method: 'DELETE',
                 success: function (response) {
                     if (response.success) {

@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TMovies.Models;
 
 namespace TMovies.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
             : base(options)
         {
         }
@@ -18,8 +20,9 @@ namespace TMovies.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure Movie-Actor many-to-many relationship
-            modelBuilder.Entity<MovieActor>()
+        base.OnModelCreating(modelBuilder);
+        // Configure Movie-Actor many-to-many relationship
+        modelBuilder.Entity<MovieActor>()
                 .HasKey(ma => new { ma.MovieId, ma.ActorId });
 
             modelBuilder.Entity<MovieActor>()
