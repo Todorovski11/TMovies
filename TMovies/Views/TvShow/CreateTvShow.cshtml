@@ -5,6 +5,8 @@
 }
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
 
 <h2 class="text-center mb-4">Create New TvShow</h2>
 
@@ -22,19 +24,19 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie title" } })
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Tv Show title" } })
                             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie rating" } })
+                            @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Tv Show rating" } })
                             @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie runtime" } })
+                            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Tv Show runtime" } })
                             @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
                         </div>
 
@@ -46,13 +48,13 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Plot, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.TextAreaFor(model => model.Plot, new { @class = "form-control", rows = "4", placeholder = "Enter movie plot" })
+                            @Html.TextAreaFor(model => model.Plot, new { @class = "form-control", rows = "4", placeholder = "Enter Tv Show plot" })
                             @Html.ValidationMessageFor(model => model.Plot, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Director, htmlAttributes: new { @class = "text-muted mb-1" })
-                            @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter movie director" } })
+                            @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Tv Show director" } })
                             @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
@@ -93,23 +95,21 @@
                                 }
                             </select>
                             @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => model.Genre) <!-- Hidden input for Genre -->
+                            @Html.HiddenFor(model => model.Genre) 
                         </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Actors, htmlAttributes: new { @class = "text-muted mb-1" })
                             <br />
-                            @foreach (var actor in ViewBag.ActorsList)
-                            {
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="@("actor_" + actor.Value)" name="SelectedActors" value="@actor.Value">
-                                    <label class="form-check-label" for="@("actor_" + actor.Value)">
-                                        @actor.Text
-                                    </label>
-                                </div>
-                            }
+                            <select id="actors-dropdown" class="form-control" multiple="multiple" name="SelectedActors">
+                                @foreach (var actor in ViewBag.ActorsList)
+                                {
+                                    <option value="@actor.Value">@actor.Text</option>
+                                }
+                            </select>
                             @Html.ValidationMessageFor(model => model.Actors, "", new { @class = "text-danger" })
                         </div>
+
 
 
                         <div class="text-center mt-4">
@@ -122,8 +122,18 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
 
 <script>
+        $(document).ready(function () {
+            $('#actors-dropdown').select2({
+                placeholder: 'Select actors',
+                allowClear: true,
+                tags: true
+            });
+        });
+
     document.getElementById('genre-dropdown').addEventListener('change', function () {
         var selectedGenre = this.value;
         document.getElementById('Genre').value = selectedGenre;

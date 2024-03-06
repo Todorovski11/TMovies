@@ -11,7 +11,6 @@ namespace TMovies.Configuration
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IActorsRepository, ActorsRepository>();
             services.AddTransient<ITvShowRepository, TvShowRepository>();
-            // Add other transient services here as needed
         }
     }
 }

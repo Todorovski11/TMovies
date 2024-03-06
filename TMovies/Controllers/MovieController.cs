@@ -58,10 +58,8 @@ namespace TMovies.Controllers
             {
                 try
                 {
-                    // Add the movie to the database
                     await _movieRepository.Create(movie);
 
-                    // Create MovieActor instances for each selected actor
                     if (SelectedActors != null && SelectedActors.Any())
                     {
                         foreach (var actorId in SelectedActors)
@@ -76,12 +74,11 @@ namespace TMovies.Controllers
                         await _db.SaveChangesAsync();
                     }
 
-                    return RedirectToAction("Movies", "Home");
+                    return RedirectToAction("Movies", "Movie");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "An error occurred while saving the movie.");
-                    // Log the exception
                     return View(movie);
                 }
             }
@@ -96,7 +93,17 @@ namespace TMovies.Controllers
             {
                 return NotFound();
             }
+            var actors = await _actorsRepository.GetAll();
+            var actorsList = actors.Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = a.Name,
+                Selected = movie.Actors.Any(actor => actor.ActorId == a.Id)
+            }).ToList();
 
+            ViewBag.ActorsList = actorsList;
+            var formattedDate = movie.ReleaseDate.ToString("yyyy-MM-dd");
+            ViewBag.FormattedDate = formattedDate;
             return View(movie);
         }
 

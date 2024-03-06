@@ -9,7 +9,7 @@ namespace TMovies.Models
     {
         public Movie()
         {
-            Actors = new List<MovieActor>(); // Initialize Actors collection
+            Actors = new List<MovieActor>();
         }
         [Key]
         public int Id { get; set; }
@@ -24,7 +24,6 @@ namespace TMovies.Models
         public string IMDbLink { get; set; }    
         public Genre Genre { get; set; }
 
-        // Change ActorsId to ICollection<Actors>
         public ICollection<MovieActor> Actors { get; set; }
     }
 }

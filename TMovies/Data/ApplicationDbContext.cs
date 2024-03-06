@@ -21,7 +21,6 @@ namespace TMovies.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         base.OnModelCreating(modelBuilder);
-        // Configure Movie-Actor many-to-many relationship
         modelBuilder.Entity<MovieActor>()
                 .HasKey(ma => new { ma.MovieId, ma.ActorId });
 
@@ -35,7 +34,6 @@ namespace TMovies.Data
                 .WithMany(a => a.Movie)
                 .HasForeignKey(ma => ma.ActorId);
 
-            // Configure TvShow-Actor many-to-many relationship
             modelBuilder.Entity<TvShowActor>()
                 .HasKey(ta => new { ta.TvShowId, ta.ActorId });
 
@@ -49,7 +47,6 @@ namespace TMovies.Data
                 .WithMany(a => a.TvShow)
                 .HasForeignKey(ta => ta.ActorId);
 
-            // Ensure unique index on MovieActor and TvShowActor
             modelBuilder.Entity<MovieActor>()
                 .HasIndex(ma => new { ma.MovieId, ma.ActorId })
                 .IsUnique();
