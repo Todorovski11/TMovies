@@ -7,7 +7,7 @@ namespace TMovies.Models
     {
         public TvShow()
         {
-            Actors = new List<TvShowActor>(); // Initialize Actors collection
+            Actors = new List<TvShowActor>();
         }
         [Key]
         public int Id { get; set; }
@@ -24,7 +24,6 @@ namespace TMovies.Models
         public int Duration { get; set; }
         public Genre Genre { get; set; }
 
-        // Change ActorsId to ICollection<Actors>
         public ICollection<TvShowActor> Actors { get; set; }
     }
 }

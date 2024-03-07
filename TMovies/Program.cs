@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using TMovies.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,5 +24,13 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseCookiePolicy();
+
+app.UseCors(builder =>
+    builder.WithOrigins("http://localhost:7154")
+           .AllowAnyHeader()
+           .AllowAnyMethod()
+    );
 
 app.Run();

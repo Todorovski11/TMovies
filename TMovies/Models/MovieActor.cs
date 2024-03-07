@@ -3,8 +3,8 @@
     public class MovieActor
     {
         public int MovieId { get; set; }
-        public Movie Movie { get; set; } // Navigation property to access the related Movie entity
+        public Movie Movie { get; set; } 
         public int ActorId { get; set; }
-        public Actor Actor { get; set; } // Navigation property to access the related Actor entity
+        public Actor Actor { get; set; } 
     }
 }

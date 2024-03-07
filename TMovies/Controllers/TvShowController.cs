@@ -57,11 +57,8 @@ namespace TMovies.Controllers
             {
                 try
                 {
-                    // Add the movie to the database
                     await _tvShowRepository.Create(tvshow);
 
-
-                    // Create MovieActor instances for each selected actor
                     if (SelectedActors != null && SelectedActors.Any())
                     {
                         foreach (var actorId in SelectedActors)
@@ -95,6 +92,18 @@ namespace TMovies.Controllers
             {
                 return NotFound();
             }
+
+            var actors = await _actorsRepository.GetAll();
+            var actorsList = actors.Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = a.Name,
+                Selected = tvShow.Actors.Any(actor => actor.ActorId == a.Id)
+            }).ToList();
+
+            ViewBag.ActorsList = actorsList;
+            var formattedDate = tvShow.Year.ToString("yyyy-MM-dd");
+            ViewBag.FormattedDate = formattedDate;
 
             return View(tvShow);
         }

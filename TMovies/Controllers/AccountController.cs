@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TMovies.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 
 public class AccountController : Controller
 {
@@ -36,7 +34,6 @@ public class AccountController : Controller
             var result = await _signInManager.PasswordSignInAsync(model.EmailOrUsername, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                // Redirect to desired page upon successful login
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -47,6 +44,7 @@ public class AccountController : Controller
         }
         return View(model);
     }
+
     [HttpPost]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
@@ -66,5 +64,12 @@ public class AccountController : Controller
         }
         return View(model);
     }
-}
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> LogOut()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+}

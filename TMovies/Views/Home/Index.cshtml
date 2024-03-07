@@ -19,7 +19,7 @@
             transition: transform 0.5s;
             transform-style: preserve-3d;
             cursor: pointer;
-            perspective: 1000px; /* Required for 3D effect */
+            perspective: 1000px;
         }
 
             .movie-card:hover {
@@ -34,25 +34,25 @@
         }
 
         .front {
-            position: relative; /* Ensure relative positioning for absolute elements */
+            position: relative;
             z-index: 2;
             background-color: #000;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Ensure space between title and metadata */
+            justify-content: space-between;
             align-items: center;
             text-align: center;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Ensure child elements don't overflow */
-            height: 100%; /* Ensure the front side fills the entire container height */
+            overflow: hidden;
+            height: 100%;
         }
 
 
             .front img {
                 max-width: 100%;
-                max-height: 100%; /* Ensure image fills the entire front side */
-                object-fit: cover; /* Ensure the image fills the available space */
+                max-height: 100%;
+                object-fit: cover;
             }
 
         .card-meta {
@@ -63,14 +63,14 @@
 
         .duration,
         .rating {
-            margin-bottom: 5px; /* Adjust spacing between metadata elements */
+            margin-bottom: 5px;
         }
 
 
 
 
         .card-meta > * {
-            margin-right: 10px; /* Adjust spacing between metadata elements */
+            margin-right: 10px;
         }
 
 
@@ -79,8 +79,8 @@
             transform: rotateY(180deg);
             z-index: 1;
             padding: 20px;
-            color: #fff; /* Set text color to white */
-            background-color: #000; /* Set background color to black */
+            color: #fff;
+            background-color: #000;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -88,7 +88,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            backface-visibility: hidden; /* Ensure the back side is hidden until flipped */
+            backface-visibility: hidden;
         }
 
         .card-title {
@@ -105,22 +105,22 @@
 
         .list-unstyled {
             margin-top: 0;
-            padding-left: 0; /* Remove left padding */
-            text-align: center; /* Center-align the entire list */
+            padding-left: 0;
+            text-align: center;
             margin-top: 10px;
         }
 
         .actors-list {
-            display: inline-block; /* Make the actors list display inline */
-            text-align: justify; /* Justify-align the actors' names within the list */
-            max-width: 100%; /* Ensure the list doesn't exceed the container width */
+            display: inline-block;
+            text-align: justify;
+            max-width: 100%;
         }
 
         .list-unstyled li {
             font-size: 0.9rem;
             color: #666;
-            display: inline; /* Ensure list items display inline */
-            margin: 0 5px; /* Adjust margin as needed */
+            display: inline;
+            margin: 0 5px;
         }
 
         .title-wrapper {
@@ -129,7 +129,7 @@
             justify-content: flex-start;
             align-items: flex-start;
             height: 100%;
-            padding-right: 10px; /* Adjust as needed for spacing */
+            padding-right: 10px;
         }
     </style>
 </head>
@@ -146,11 +146,10 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <span class="logged-in-user" style="color: white; font-size: 1.2rem;">@User.Identity.Name</span>
-
             }
             else
             {
-                <button class="btn btn-primary"> <a href="@Url.Action("Login", "Account")">Sign In</a></button>
+                <a href="@Url.Action("Login", "Account")" class="btn btn-primary">Sign In</a>
             }
 
         </div>
@@ -161,7 +160,6 @@
 
         <nav class="navbar" data-navbar>
             <ul class="navbar-list align-items-start">
-                <!-- Added align-items-start -->
 
                 <li>
                     <a href="@Url.Action("Index", "Home")" class="navbar-link">Home</a>
@@ -185,8 +183,6 @@
 
 
 <body>
-    <!-- Bootstrap Carousel for image slider -->
-    <!-- Bootstrap Carousel for image slider -->
     @{
         var random = new Random();
         var shuffledMovies = Model.Movie.OrderBy(x => random.Next()).ToList();
@@ -209,8 +205,8 @@
                 <div class="carousel-item @if (shuffledMovies.IndexOf(movie) == 0) {
             <text>active</text>
                 }">
-                        <img class="d-block w-100" src="@movie.ImgBanner" alt="@movie.Title" style="max-height: 700px; object-fit: cover;">
-                    </div>
+                            <img class="d-block w-100" src="@movie.ImgBanner" alt="@movie.Title" style="max-height: 700px; object-fit: cover;">
+                        </div>
             }
 
             @foreach (var tvShow in shuffledTvShows)
@@ -242,41 +238,40 @@
                         {
                             <li>
                                 <div class="movie-card">
-                                    <!-- Front side of the card -->
+                           
                                     <div class="front card-body">
-                                        <!-- Movie banner -->
+                                        
                                         <a href="./movie-details.html">
                                             <figure class="card-banner">
                                                 <img src="@movie.ImgLink" alt="@movie.Title" style="max-width: 100%; height: auto;">
                                             </figure>
                                         </a>
-                                        <!-- Movie title -->
+                                       
                                         <div class="title-wrapper">
                                             <a href="@movie.IMDbLink">
                                                 <h3 class="card-title">@movie.Title</h3>
                                             </a>
                                         </div>
-                                        <!-- Movie metadata -->
+                                        
                                         <div class="card-meta d-flex">
-                                            <!-- Rating -->
+                                            
                                             <div class="mr-3 d-flex align-items-center">
                                                 <i class="far fa-star text-white"></i>
                                                 <data class="ml-1 text-white">@movie.Rating</data>
                                             </div>
-                                            <!-- Release year -->
+                                            
                                             <div class="d-flex align-items-center">
                                                 <i class="far fa-calendar text-white"></i>
                                                 <time class="ml-1 text-white" datetime="2022">@movie.ReleaseDate.Year</time>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Back side of the card -->
+
                                     <div class="back card-body">
-                                        <!-- Movie details -->
+
                                         <h3 class="card-title"><a href="@movie.IMDbLink">@movie.Title</a></h3>
                                         <p>@movie.Plot</p>
                                         <p>Director: @movie.Director</p>
-                                        <!-- Actors -->
                                         <ul class="list-unstyled">
                                             <p>Actors</p>
                                             <div class="actors-list">
@@ -348,9 +343,9 @@
                                                     }
                                                 }
                                     </div>
-                                </ul>
-                            </div>
-                        </div>
+                        </ul>
+                    </div>
+                    </div>
                     </li>
                         }
                 </ul>
@@ -358,5 +353,80 @@
             </section>
         </article>
     </main>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-brand-wrapper">
+                    <a class="logo">
+                        <img src="https://www.fibretiger.co.za/assets/img/news/winter-binge-watching-2022/fantasy-movies.jpg">
+                    </a>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")" class="navbar-link">Home</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Movies", "Movie")" class="navbar-link">Movies</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("TvShows", "TvShow")" class="navbar-link">TvShows</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="divider"></div>
+                <div class="quicklink-wrapper">
+                    <ul class="quicklink-list">
+                        <li>
+                            <a href="#" class="quicklink-link">Faq</a>
+                        </li>
+                        <li>
+                            <a href="#" class="quicklink-link">Help center</a>
+                        </li>
+                        <li>
+                            <a href="#" class="quicklink-link">Terms of use</a>
+                        </li>
+                        <li>
+                            <a href="#" class="quicklink-link">Privacy</a>
+                        </li>
+                    </ul>
+                    <ul class="social-list">
+                        <li>
+                            <a href="https://www.linkedin.com/in/martin-todorovski-55a6b6267/" class="social-link">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Todorovski11" class="social-link">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("CreateMovie", "Movie")" class="social-link">
+                                <i class="fa-solid fa-film"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("CreateTvShow", "TvShow")" class="social-link">
+                                <i class="fa-solid fa-tv"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#top" class="go-top" data-go-top>
+        <i class="fa-solid fa-up-long"></i>
+    </a>
+
 </body>
 </html>
+<script>
+    const goTopBtn = document.querySelector("[data-go-top]");
+
+    window.addEventListener("scroll", function () {
+
+        window.scrollY >= 500 ? goTopBtn.classList.add("active") : goTopBtn.classList.remove("active");
+
+    });
+</script>

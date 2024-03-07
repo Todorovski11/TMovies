@@ -9,7 +9,6 @@ public static class IdentityConfiguration
     {
         services.AddIdentity<IdentityUser, IdentityRole>(options =>
         {
-            // Disable email confirmation requirement
             options.SignIn.RequireConfirmedAccount = false;
         })
             .AddEntityFrameworkStores<ApplicationDbContext>();
